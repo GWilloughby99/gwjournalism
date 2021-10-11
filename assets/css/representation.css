@@ -1,0 +1,66 @@
+/* Gloabl */
+
+.body, html {
+  height: 100%;
+}
+
+.big-img  {
+  opacity: 0.9;
+}
+
+.big-img:hover {
+  opacity: 1.5;
+}
+
+.post-heading {
+  opacity: 1;
+}
+
+blockquote {
+    padding: 0.625rem 1.25rem;
+    margin: 0 0 1.25rem;
+    font-size: 1.1rem;
+    border-left: 0.3125rem solid #4f6d7aff;
+    font-style: italic;
+
+}
+
+.box-warning {
+  background-color: #6cae75ff;
+  border-left-color: #ffffff;
+  color: white;
+  padding: 0.9375rem 0.9375rem 0.9375rem 0.625rem;
+  margin: 1.25rem 1.25rem 1.25rem 0.3125rem;
+  border: 1px solid #4f6d7aff;
+  border-left-width: 0.3125rem;
+  border-radius: 0.3125rem 0.1875rem 0.1875rem 0.3125rem;
+}
+
+/* Images */
+
+#cover-img {
+border: 2px solid black;
+padding: 25px;
+position: relative;
+opacity: 0.9;
+background-attachment: fixed;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+/* background-image: url("../assets/img/police.jpg"); */
+/* max-height: 1500px; */
+/* max-width: 1990px; */
+object-fit: cover;
+}
+
+p {
+display: block;
+margin-block-start: 1em;
+margin-block-end: 1em;
+margin-inline-start: 0px;
+margin-inline-end: 0px;
+font-size: 22px;
+box-sizing: border-box;
+margin-top: 1rem;
+/* padding-top: 5px; */
+}
