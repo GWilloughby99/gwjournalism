@@ -59,17 +59,18 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #6cae75ff;
+  background-color: #4f6d7aff;
+  /* color: #fefae0; */
   height: auto;
 }
 li {
   float: right;
-  border-right: 1px solid #4f6d7aff;
+  /* border-right: 1px solid #4f6d7aff; */
 }
 
 li a, .dropbtn {
   display: inline-block;
-  color: white;
+  color: #fefae0;
   font-size: 22px;
   text-align: center;
   padding: 10px 12px;

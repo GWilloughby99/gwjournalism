@@ -1,1 +1,12 @@
 /* Global */
+
+.box-warning {
+  background-color: #6cae75ff;
+  border-left-color: #ffffff;
+  color: white;
+  padding: 0.9375rem 0.9375rem 0.9375rem 0.625rem;
+  margin: 1.25rem 1.25rem 1.25rem 0.3125rem;
+  border: 1px solid #4f6d7aff;
+  border-left-width: 0.3125rem;
+  border-radius: 0.3125rem 0.1875rem 0.1875rem 0.3125rem;
+}
