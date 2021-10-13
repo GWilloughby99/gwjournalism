@@ -118,20 +118,24 @@ blockquote {
     text-align: center;
   }
 
-  .contact-list {
-    display: flex;
-    justify-content: center;
-  }
-
-  .contact-list a {
-    padding: 5px;
-  }
-
 /* Footer and contact details */
 footer {
   background-color: #4f6d7aff;
   color: #fefae0;
 /* text-align: center; */
+}
+
+.contact-list {
+  list-style-type: none;
+  padding: 0px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+}
+.contact-list a {
+  padding: 0px;
+  display: inline-block;
+  font-size: 22px;
 }
 
 /* Misc */
