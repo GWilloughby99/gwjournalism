@@ -17,7 +17,7 @@
 }
 
 .dexter {
-  max-height: 210px;
+  height: 210px;
   float: right;
   margin-right: -10vw !important; width: 15vw !important;
   border-radius: 25px;
