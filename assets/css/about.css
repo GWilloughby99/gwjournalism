@@ -3,19 +3,21 @@
 
 .profile {
   float: left;
-  height: 350px;
+  height: 450px;
   width: 500px;
   margin-left: -10vw !important; width: 15vw !important;
   border-radius: 25px;
   margin-right: 15px;
+  margin-bottom: 20px;
   border: solid #4f6d7aff;
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   width: 100%;
   height: auto
 }
 
 .dexter {
+  max-height: 210px;
   float: right;
   margin-right: -10vw !important; width: 15vw !important;
   border-radius: 25px;
