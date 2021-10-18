@@ -8,6 +8,12 @@
  */
 
 /* Global */
+
+main {
+  background-color: #f3f5f7;
+
+}
+
 .content-wrap{
   max-width: 800px;
   width: 85%;
