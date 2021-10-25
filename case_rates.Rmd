@@ -1,0 +1,227 @@
+---
+title: "case_rate"
+author: "George WIlloughby"
+date: "19/10/2021"
+output: html_document
+---
+
+# Covid-19 latest numbers
+
+**Cases in the UK - particularly England - are rising with concerns mounting ahead the winter. This script will query the government's Covid dashboard API and calculate weekly case rates using population figures.**
+
+Step one is to extract the data
+
+```{r}
+library(jsonlite)
+library(httr)
+library(dplyr)
+```
+
+# Get the latest case numbers from the lower tier local authorities
+
+```{r}
+#' Extracts paginated data by requesting all of the pages
+#' and combining the results.
+#'
+#' @param filters    API filters. See the API documentations for 
+#'                   additional information.
+#'                   
+#' @param structure  Structure parameter. See the API documentations 
+#'                   for additional information.
+#'                   
+#' @return list      Comprehensive list of dictionaries containing all 
+#'                   the data for the given ``filter`` and ``structure`.`
+get_paginated_data <- function (filters, structure) {
+  
+    endpoint     <- "https://api.coronavirus.data.gov.uk/v1/data"
+    results      <- list()
+    current_page <- 1
+    
+    repeat {
+
+        httr::GET(
+            url   = endpoint,
+            query = list(
+                filters   = paste(filters, collapse = ";"),
+                structure = jsonlite::toJSON(structure, auto_unbox = TRUE),
+                page      = current_page
+            ),
+            timeout(10)
+        ) -> response
+        
+        # Handle errors:
+        if ( response$status_code >= 400 ) {
+            err_msg = httr::http_status(response)
+            stop(err_msg)
+        } else if ( response$status_code == 204 ) {
+            break
+        }
+        
+        # Convert response from binary to JSON:
+        json_text <- content(response, "text")
+        dt        <- jsonlite::fromJSON(json_text)
+        results   <- rbind(results, dt$data)
+        
+        if ( is.null( dt$pagination$`next` ) ){
+            break
+        }
+        
+        current_page <- current_page + 1;
+
+    }
+    
+    return(results)
+    
+}
+
+
+# Create filters:
+query_filters <- c(
+    "areaType=ltla"
+)
+
+# Create the structure as a list or a list of lists:
+query_structure <- list(
+    date       = "date", 
+    name       = "areaName", 
+    code       = "areaCode", 
+    daily_cases      = "newCasesByPublishDate"
+)
+
+latest_lower_authority <- get_paginated_data(query_filters, query_structure)
+
+list(
+  "Shape"                = dim(latest_lower_authority),
+  "Data (first 3 items)" = latest_lower_authority[0:3, 0:-1]
+) -> report
+
+print(report)
+```
+
+
+
+```{r}
+#Checking for names of authorities
+unique(latest_lower_authority$name)
+
+#Remove duplicates
+latest_lower_authority <- distinct(latest_lower_authority)
+```
+
+# Using regex to remove the local authorities from Scotland and Wales
+
+We can use regex to include all the data we need just for England by using [E]. It asks if a word starts with the letter E and it will create another column for when it does. In this case, it will get the cases for the authorities in England.
+
+```{r}
+#Check for code names
+unique(latest_lower_authority$code)
+
+#Selecting authority codes that begin with 'E'
+latest_lower_authority$England <- grepl("[E]", latest_lower_authority$code)
+
+latest_lower_authority
+
+#Remove LAs in Wales and Scotland
+latest_lower_authority <- subset(latest_lower_authority, latest_lower_authority$England == TRUE)
+
+#View changes
+head(latest_lower_authority)
+```
+
+
+
+# Calculating the rate per 100k for the local authorities in England
+
+To do this, we will need to import the latest population figures for all of the authorities. Data for this is supplied by the Office for National Statistics and we can import it.
+
+```{r}
+#Importing the population figures
+
+populationestimates <- read.csv("updatedestimations.csv")
+
+populationestimates <- populationestimates %>%
+  rename(
+    name = Name
+  )
+
+#View changes
+populationestimates
+```
+
+#Merging the population figures with the 'all_authorities' data
+
+```{r}
+#Merging cases and population data together
+la_population <- merge(latest_lower_authority, populationestimates, by = "name")
+
+la_population
+```
+
+# Dropping columns from the updated dataset
+
+From the new updated dataset, you should be able to see we have some duplicated columns. For example, code is repeated. We are also only looking for the overall population for each authority so we can remove all the age brackets that come after the 'All.ages. column. To check which columns to remove, we will view them to see the index number in brackets []
+
+```{r}
+#View column headers
+colnames(la_population)
+
+#Dropping unwanted columns
+la_population <- la_population [-c(6,7, 9:100)]
+
+la_population
+
+#Changing all.ages heading
+la_population <- la_population %>%
+  rename(
+    population = All.ages
+  )
+
+la_population
+```
+
+# Calculating the case rates per 100k
+
+To do this, we need to do divide cases by the population of the authority and then multiply by **100,000**.
+
+```{r}
+#Calculating the rate per 100 thousand people
+la_population$case_rate <- (la_population$daily_cases/la_population$population) *100000
+
+#Check the calculation
+la_population
+```
+
+
+# Figuring out the weekly sum 
+
+The next thing to calculate is the rolling sum of cases for each authority. We can then use the arrange() function in the dplyr() library to put the authorities in descending order from largest to smallest in terms of case rates.
+
+```{r}
+#Activating packages
+library(dplyr)
+library(zoo)
+
+#calculate a rolling weekly average
+la_population_sum <- la_population %>%
+  dplyr::arrange(desc(date)) %>%
+  dplyr::group_by(name) %>%
+  dplyr::mutate(cases_seven_day_average = zoo::rollsum(case_rate, k = 7, align="left", fill = NA)) %>%
+  dplyr::ungroup()
+
+#Check results
+la_population_sum
+```
+
+# Looking at the top-to areas for Covid rates
+
+```{r}
+library(dplyr)
+
+la_population_sum %>%
+  
+```
+
+
+
+
+
