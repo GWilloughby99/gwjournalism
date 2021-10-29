@@ -11,10 +11,9 @@
 
 main {
   background-color: #f3f5f7;
-
 }
 
-.content-wrap{
+.content-wrap {
   max-width: 800px;
   width: 85%;
   margin: 0 auto;
@@ -22,11 +21,11 @@ main {
 }
 
 h1 {
-font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 h3 {
-font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 p {
@@ -49,15 +48,15 @@ hr {
 
 .navbar {
   position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    padding: .5rem 1rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
 }
 
 ul {
@@ -74,7 +73,8 @@ li {
   /* border-right: 1px solid #4f6d7aff; */
 }
 
-li a, .dropbtn {
+li a,
+.dropbtn {
   display: inline-block;
   color: #fefae0;
   font-size: 22px;
@@ -83,17 +83,18 @@ li a, .dropbtn {
   text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
+li a:hover,
+.dropdown:hover .dropbtn {
   background-color: #4f6d7aff;
 }
 
 body {
-  background: #F5F5F5;
-  color: 	#080808;
-	font-size: 16px;
-	color: #ffffff;
-	text-rendering: optimizeLegibility;
-	font-weight: initial;
+  background: #f3f5f7;
+  color: #080808;
+  font-size: 16px;
+  color: #ffffff;
+  text-rendering: optimizeLegibility;
+  font-weight: initial;
 }
 /* Introduction */
 
@@ -105,27 +106,27 @@ header {
 
 blockquote {
   font-size: 20px;
-  width:100%;
-  margin:50px auto;
-  font-family:Open Sans;
-  font-style:italic;
+  width: 100%;
+  margin: 50px auto;
+  font-family: Open Sans;
+  font-style: italic;
   color: #555555;
-  padding:1.2em 30px 1.2em 30px;
-  border-left:8px solid #6cae75ff;
-  line-height:1.6;
+  padding: 1.2em 30px 1.2em 30px;
+  border-left: 8px solid #6cae75ff;
+  line-height: 1.6;
   position: relative;
-  background:#F8F8F8;
+  background: #f8f8f8;
 }
 
 /* Responsive */
 
-@media screen and (min-width:800px){
+@media screen and (min-width: 800px) {
   body {
     text-align: center;
   }
 }
 
-  /* @media screen and (max-width:750px){
+/* @media screen and (max-width:750px){
     header, body, footer {
       text-align: center;
       width: 100%;
